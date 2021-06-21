@@ -15,7 +15,11 @@ class App extends React.Component {
         name: "",
         status: -1,
       },
-      keyWord: '',
+      keyWord: "",
+      sort: {
+        by: "",
+        value: 1,
+      },
     };
   }
   onGeneraData = () => {
@@ -164,12 +168,17 @@ class App extends React.Component {
     });
     // console.log(this.state.filter)
   };
-  onSearch = (keyword) =>{
+  onSearch = (keyword) => {
     // console.log(keyword)
     this.setState({
-      keyWord: keyword.toLowerCase()
-    })
-  }
+      keyWord: keyword.toLowerCase(),
+    });
+  };
+  onSort = (sort) => {
+    this.setState({
+      sort: sort,
+    });
+  };
   render() {
     //Chuc nang loc du lieu
     var filter = this.state.filter;
@@ -190,10 +199,28 @@ class App extends React.Component {
     }
     // Chuc nang tim kiem
     var keyWord = this.state.keyWord;
-    if(keyWord){
+    if (keyWord) {
       tasks = tasks.filter((task) => {
         return task.name.toLowerCase().indexOf(keyWord) !== -1;
-      })
+      });
+    }
+    //Chuc nang sort
+    var sort = this.state.sort;
+    if (sort) {
+      if (sort.By === "name") {
+        tasks = tasks.sort((a, b) => {
+          if (a.name > b.name) return sort.value;
+          else if (a.name < b.name)
+            return -sort.value;
+          else return 0;
+        });
+      } else {
+        tasks = tasks.sort((a, b) => {
+          if (a.status > b.status) return -sort.value;
+          else if (a.status < b.status) return sort.value;
+          else return 0;
+        });
+      }
     }
     var elmTaskForm = this.state.isDisplayForm ? (
       <TaskForm
@@ -242,9 +269,17 @@ class App extends React.Component {
             >
               Generate Data
             </button>
-            <Control onSearch={this.onSearch} />
+            <Control onSearch={this.onSearch} onSort={this.onSort} />
             <TaskList
-              tasks={filter.name?tasks:keyWord?tasks:this.state.tasks}
+              tasks={
+                filter.name
+                  ? tasks
+                  : keyWord
+                  ? tasks
+                  : sort
+                  ? tasks
+                  : this.state.tasks
+              }
               onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}

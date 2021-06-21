@@ -45,6 +45,9 @@
 .ml-5{
   margin-left: 5px;
 }
+.ml-15 {
+  margin-left: 15px;
+}
 .pr-5 {
   padding-right: 5px;
 }
@@ -55,6 +58,19 @@
   display: flex;
   justify-content: space-between;
 }
+.text-iconn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .pl-5 {
   padding-left: 5px;
+}
+.sort-selected::after {
+  content: '\f00c';
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  margin: 0px 0px 0px 10px;
+  display: inline-block;
 }
