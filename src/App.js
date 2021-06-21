@@ -15,6 +15,7 @@ class App extends React.Component {
         name: "",
         status: -1,
       },
+      keyWord: '',
     };
   }
   onGeneraData = () => {
@@ -163,7 +164,12 @@ class App extends React.Component {
     });
     // console.log(this.state.filter)
   };
-  
+  onSearch = (keyword) =>{
+    // console.log(keyword)
+    this.setState({
+      keyWord: keyword.toLowerCase()
+    })
+  }
   render() {
     //Chuc nang loc du lieu
     var filter = this.state.filter;
@@ -181,6 +187,13 @@ class App extends React.Component {
           return task.status === (filter.status === 1 ? true : false);
         }
       });
+    }
+    // Chuc nang tim kiem
+    var keyWord = this.state.keyWord;
+    if(keyWord){
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyWord) !== -1;
+      })
     }
     var elmTaskForm = this.state.isDisplayForm ? (
       <TaskForm
@@ -229,9 +242,9 @@ class App extends React.Component {
             >
               Generate Data
             </button>
-            <Control />
+            <Control onSearch={this.onSearch} />
             <TaskList
-              tasks={filter.name?tasks:this.state.tasks}
+              tasks={filter.name?tasks:keyWord?tasks:this.state.tasks}
               onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}
