@@ -163,46 +163,25 @@ class App extends React.Component {
     });
     // console.log(this.state.filter)
   };
-  // static getDerivedStateFromProps(props,state){
-  //   var tasks= state.tasks;
-  //   var filter= state.filter;
-  //   console.log("props",props)
-  //   console.log("tasks",tasks);
-  //   console.log("filter",filter);
-  //     // if(props.task !== state.task) {
-
-  //     // }
-  //     // var filter = this.state.filter;
-  //     tasks = tasks.filter((task) => {
-  //       return task.name.toLowerCase().indexOf(filter.name) !==-1;
-  //     })
-
-  //     // console.log("tasks",tasks)
-  //     return {
-  //       id: tasks.id,
-  //       name: tasks.name,
-  //       status: tasks.status
-  //     }
-  // }
-
+  
   render() {
     //Chuc nang loc du lieu
-    // var filter = this.state.filter;
-    // var tasks = this.state.tasks;
-    // if (filter) {
-    //   if (filter.name) {
-    //     this.state.tasks = tasks.filter((task) => {
-    //       return task.name.toLowerCase().indexOf(filter.name) !== -1;
-    //     });
-    //   }
-    //   tasks = tasks.filter((task) => {
-    //     if (filter.status === -1) {
-    //       return task;
-    //     } else {
-    //       return task.status === (filter.status === 1 ? true : false);
-    //     }
-    //   });
-    // }
+    var filter = this.state.filter;
+    var tasks = this.state.tasks;
+    if (filter) {
+      if (filter.name) {
+        tasks = tasks.filter((task) => {
+          return task.name.toLowerCase().indexOf(filter.name) !== -1;
+        });
+      }
+      tasks = tasks.filter((task) => {
+        if (filter.status === -1) {
+          return task;
+        } else {
+          return task.status === (filter.status === 1 ? true : false);
+        }
+      });
+    }
     var elmTaskForm = this.state.isDisplayForm ? (
       <TaskForm
         onCloseForm={this.onCloseForm}
@@ -252,7 +231,7 @@ class App extends React.Component {
             </button>
             <Control />
             <TaskList
-              tasks={this.state.tasks}
+              tasks={filter.name?tasks:this.state.tasks}
               onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}
