@@ -271,15 +271,15 @@ class App extends React.Component {
             </button>
             <Control onSearch={this.onSearch} onSort={this.onSort} />
             <TaskList
-              tasks={
-                filter.name
-                  ? tasks
-                  : keyWord
-                  ? tasks
-                  : sort
-                  ? tasks
-                  : this.state.tasks
-              }
+              // tasks={
+              //   filter.name
+              //     ? tasks
+              //     : keyWord
+              //     ? tasks
+              //     : sort
+              //     ? tasks
+              //     : this.state.tasks
+              // }
               onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}

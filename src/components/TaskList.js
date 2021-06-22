@@ -1,5 +1,7 @@
 import React from "react";
 import TaskItem from "./TaskItem";
+import { connect } from "react-redux";
+
 class TaskList extends React.Component {
   constructor(props) {
     super(props);
@@ -15,16 +17,17 @@ class TaskList extends React.Component {
       name === "filterName" ? value : this.state.filterName,
       name === "filterStatus" ? value : this.state.filterStatus
     );
-    this.setState({
-      [name]: value,
-    }
-    // ,() => {
-    //   console.log(this.state)
-    // }
+    this.setState(
+      {
+        [name]: value,
+      }
+      // ,() => {
+      //   console.log(this.state)
+      // }
     );
-   
   };
   render() {
+  //  var tasks = this.props.tasks;
     var elmTasks = this.props.tasks.map((task, index) => {
       return (
         <TaskItem
@@ -82,4 +85,9 @@ class TaskList extends React.Component {
     );
   }
 }
-export default TaskList;
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.tasks
+  }
+};
+export default connect(mapStateToProps,null)(TaskList);
