@@ -1,5 +1,6 @@
 import * as types from "./../constants/actionTypes";
-
+var id = "";
+var index = -1;
 var data = JSON.parse(localStorage.getItem("tasks"));
 var initialState = data ? data : [];
 var findIndex = (tasks, id) => {
@@ -46,15 +47,21 @@ var myReducer = (state = initialState, action) => {
       return [...state];
     case types.UPDATE_TASK_STATUS:
       // console.log(action);
-      var id = action.id;
-      var index = findIndex(state, id);
+      id = action.id;
+      index = findIndex(state, id);
       // console.log(state);
       //cach '1'
       // state[index] = {
       //   ...state[index],
       //   status: !state[index].status,
       // };
-      state[index].status = !state[index].status;//cach '2'
+      state[index].status = !state[index].status; //cach '2'
+      localStorage.setItem("tasks", JSON.stringify(state));
+      return [...state];
+    case types.DELETE_TASK:
+      id = action.id;
+      index = findIndex(state, id);
+      state.splice(index, 1);
       localStorage.setItem("tasks", JSON.stringify(state));
       return [...state];
     default:

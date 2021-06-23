@@ -107,18 +107,18 @@ class App extends React.Component {
   // };
   
   //Chuc nang xoa
-  onDelete = (id) => {
-    var tasks = this.state.tasks;
-    var index = this.findIndex(id);
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      this.setState({
-        tasks: tasks,
-      });
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-    this.onCloseForm();
-  };
+  // onDelete = (id) => {
+  //   var tasks = this.state.tasks;
+  //   var index = this.findIndex(id);
+  //   if (index !== -1) {
+  //     tasks.splice(index, 1);
+  //     this.setState({
+  //       tasks: tasks,
+  //     });
+  //     localStorage.setItem("tasks", JSON.stringify(tasks));
+  //   }
+  //   this.onCloseForm();
+  // };
   //Chuc nang sua
   // onUpdate = (id) => {
   //   var tasks = this.state.tasks;
@@ -257,7 +257,7 @@ class App extends React.Component {
               //     : this.state.tasks
               // }
               // onUpdateStatus={this.onUpdateStatus}
-              onDelete={this.onDelete}
+              // onDelete={this.onDelete}
               onUpdate={this.onUpdate}
               onFilter={this.onFilter}
             />

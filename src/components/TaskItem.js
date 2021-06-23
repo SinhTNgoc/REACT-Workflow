@@ -6,8 +6,9 @@ class TaskItem extends React.Component {
   onUpdateStatus = () => {
     this.props.onUpdateStatusTask(this.props.task.id);
   };
-  onDelete = () => {
-    this.props.onDelete(this.props.task.id);
+  onDeleteTask = () => {
+    this.props.onDeleteTask(this.props.task.id);
+    this.props.closeForm();
   };
   onUpdate = () => {
     this.props.onUpdate(this.props.task.id);
@@ -41,7 +42,7 @@ class TaskItem extends React.Component {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={this.onDelete}
+            onClick={this.onDeleteTask}
           >
             <i className="fas fa-trash mr-5"></i>Xoa
           </button>
@@ -52,7 +53,7 @@ class TaskItem extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    tasks: state.tasks,//cach '2'
+    tasks: state.tasks, //cach '2'
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
@@ -60,6 +61,12 @@ const mapDispatchToProps = (dispatch, props) => {
     onUpdateStatusTask: (id) => {
       dispatch(actions.updateStatusTask(id));
     },
+    onDeleteTask: (id) => {
+      dispatch(actions.onDeleteTask(id));
+    },
+    closeForm: () => {
+      dispatch(actions.closeForm());
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);
