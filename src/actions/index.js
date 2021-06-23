@@ -20,3 +20,9 @@ export const closeForm = () => {
 export const openForm = () => {
   return { type: types.OPEN_FORM };
 };
+export const updateStatusTask = (id) => {
+  return {
+    type: types.UPDATE_TASK_STATUS,
+    id: id,
+  };
+};

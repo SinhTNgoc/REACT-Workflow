@@ -93,28 +93,19 @@ class App extends React.Component {
   //   localStorage.setItem("tasks", JSON.stringify(tasks));
   // };
   //Chuc nang cap nhat status
-  onUpdateStatus = (id) => {
-    // console.log(id)
-    var tasks = this.state.tasks;
-    var index = this.findIndex(id);
-    if (index !== -1) {
-      tasks[index].status = !tasks[index].status;
-      this.setState({
-        tasks: tasks,
-      });
-    }
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  };
-  findIndex = (id) => {
-    var tasks = this.state.tasks;
-    var result = -1;
-    tasks.forEach((task, index) => {
-      if (task.id === id) {
-        result = index;
-      }
-    });
-    return result;
-  };
+  // onUpdateStatus = (id) => {
+  //   // console.log(id)
+  //   var tasks = this.state.tasks;
+  //   var index = this.findIndex(id);
+  //   if (index !== -1) {
+  //     tasks[index].status = !tasks[index].status;
+  //     this.setState({
+  //       tasks: tasks,
+  //     });
+  //   }
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // };
+  
   //Chuc nang xoa
   onDelete = (id) => {
     var tasks = this.state.tasks;
@@ -265,7 +256,7 @@ class App extends React.Component {
               //     ? tasks
               //     : this.state.tasks
               // }
-              onUpdateStatus={this.onUpdateStatus}
+              // onUpdateStatus={this.onUpdateStatus}
               onDelete={this.onDelete}
               onUpdate={this.onUpdate}
               onFilter={this.onFilter}
