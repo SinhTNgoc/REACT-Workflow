@@ -151,6 +151,10 @@ const mapDispatchToProps = (dispatch, props) => {
     onAddTasks: (task) => {
       dispatch(actions.addTask(task));
     },
+    onCloseForm: () => {
+      dispatch(actions.closeForm());
+
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
