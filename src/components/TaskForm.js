@@ -1,5 +1,7 @@
 import React from "react";
 // import "../App.css";
+import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskForm extends React.Component {
   constructor(props) {
@@ -10,9 +12,7 @@ class TaskForm extends React.Component {
       status: false,
     };
   }
-  onCloseForm = () => {
-    this.props.onCloseForm();
-  };
+  //Lay du lieu nhap tu form
   onChange = (e) => {
     var name = e.target.name;
     var value = e.target.value;
@@ -25,10 +25,14 @@ class TaskForm extends React.Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    // this.props.onSubmit(this.state);
     //Close form && Clear
+    this.props.onAddTasks(this.state);
     this.onClearForm();
     this.onCloseForm();
+  };
+  onCloseForm = () => {
+    this.props.onCloseForm();
   };
   onClearForm = () => {
     this.setState({
@@ -139,4 +143,14 @@ class TaskForm extends React.Component {
     );
   }
 }
-export default TaskForm;
+const mapStateToProps = (state) => {
+  return {};
+};
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onAddTasks: (task) => {
+      dispatch(actions.addTask(task));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

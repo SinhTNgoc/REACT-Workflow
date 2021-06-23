@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [], //id, name, status
+      // tasks: [], //id, name, status
       isDisplayForm: false,
       taskEditing: null,
       filter: {
@@ -38,33 +38,15 @@ class App extends React.Component {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   };
   // Duoc goi duy nhat 1 lan khi component duoc gan vao
-  componentDidMount() {
-    if (localStorage && localStorage.getItem("tasks")) {
-      var task = JSON.parse(localStorage.getItem("tasks"));
-      this.setState({
-        tasks: task,
-      });
-    }
-  }
-  // Tao chuoi random
-  S4 = () => {
-    return Math.floor((1 + Math.random()) * 0x1000)
-      .toString(16)
-      .substring(1);
-  };
-  generateId = () => {
-    return (
-      this.S4() +
-      this.S4() +
-      "-" +
-      this.S4() +
-      "-" +
-      this.S4() +
-      "-" +
-      this.S4() +
-      "-"
-    );
-  };
+  // componentDidMount() {
+  //   if (localStorage && localStorage.getItem("tasks")) {
+  //     var task = JSON.parse(localStorage.getItem("tasks"));
+  //     this.setState({
+  //       tasks: task,
+  //     });
+  //   }
+  // }
+  
   onToggleForm = () => {
     if (this.state.isDisplayForm && this.state.taskEditing !== null) {
       this.setState({
@@ -143,20 +125,20 @@ class App extends React.Component {
     this.onCloseForm();
   };
   //Chuc nang sua
-  onUpdate = (id) => {
-    var tasks = this.state.tasks;
-    // var taskEditing= this.state.taskEditing;
-    var index = this.findIndex(id);
-    // var taskEditing = tasks[index];
-    if (index !== -1) {
-      this.setState({
-        taskEditing: tasks[index],
-      });
-      // console.log(taskEditing);
-    }
-    // console.log(id);
-    this.onShowForm();
-  };
+  // onUpdate = (id) => {
+  //   var tasks = this.state.tasks;
+  //   // var taskEditing= this.state.taskEditing;
+  //   var index = this.findIndex(id);
+  //   // var taskEditing = tasks[index];
+  //   if (index !== -1) {
+  //     this.setState({
+  //       taskEditing: tasks[index],
+  //     });
+  //     // console.log(taskEditing);
+  //   }
+  //   // console.log(id);
+  //   this.onShowForm();
+  // };
   //Chuc nang loc du lieu
   onFilter = (filterName, filterStatus) => {
     filterStatus = 1.0 * filterStatus;
@@ -181,47 +163,47 @@ class App extends React.Component {
   };
   render() {
     //Chuc nang loc du lieu
-    var filter = this.state.filter;
-    var tasks = this.state.tasks;
-    if (filter) {
-      if (filter.name) {
-        tasks = tasks.filter((task) => {
-          return task.name.toLowerCase().indexOf(filter.name) !== -1;
-        });
-      }
-      tasks = tasks.filter((task) => {
-        if (filter.status === -1) {
-          return task;
-        } else {
-          return task.status === (filter.status === 1 ? true : false);
-        }
-      });
-    }
-    // Chuc nang tim kiem
-    var keyWord = this.state.keyWord;
-    if (keyWord) {
-      tasks = tasks.filter((task) => {
-        return task.name.toLowerCase().indexOf(keyWord) !== -1;
-      });
-    }
-    //Chuc nang sort
-    var sort = this.state.sort;
-    if (sort) {
-      if (sort.By === "name") {
-        tasks = tasks.sort((a, b) => {
-          if (a.name > b.name) return sort.value;
-          else if (a.name < b.name)
-            return -sort.value;
-          else return 0;
-        });
-      } else {
-        tasks = tasks.sort((a, b) => {
-          if (a.status > b.status) return -sort.value;
-          else if (a.status < b.status) return sort.value;
-          else return 0;
-        });
-      }
-    }
+    // var filter = this.state.filter;
+    // var tasks = this.state.tasks;
+    // if (filter) {
+    //   if (filter.name) {
+    //     tasks = tasks.filter((task) => {
+    //       return task.name.toLowerCase().indexOf(filter.name) !== -1;
+    //     });
+    //   }
+    //   tasks = tasks.filter((task) => {
+    //     if (filter.status === -1) {
+    //       return task;
+    //     } else {
+    //       return task.status === (filter.status === 1 ? true : false);
+    //     }
+    //   });
+    // }
+    // // Chuc nang tim kiem
+    // var keyWord = this.state.keyWord;
+    // if (keyWord) {
+    //   tasks = tasks.filter((task) => {
+    //     return task.name.toLowerCase().indexOf(keyWord) !== -1;
+    //   });
+    // }
+    // //Chuc nang sort
+    // var sort = this.state.sort;
+    // if (sort) {
+    //   if (sort.By === "name") {
+    //     tasks = tasks.sort((a, b) => {
+    //       if (a.name > b.name) return sort.value;
+    //       else if (a.name < b.name)
+    //         return -sort.value;
+    //       else return 0;
+    //     });
+    //   } else {
+    //     tasks = tasks.sort((a, b) => {
+    //       if (a.status > b.status) return -sort.value;
+    //       else if (a.status < b.status) return sort.value;
+    //       else return 0;
+    //     });
+    //   }
+    // }
     var elmTaskForm = this.state.isDisplayForm ? (
       <TaskForm
         onCloseForm={this.onCloseForm}
