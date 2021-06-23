@@ -4,7 +4,7 @@ import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
 import { connect } from "react-redux";
-import * as actions from "./actions/index"
+import * as actions from "./actions/index";
 
 class App extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class App extends React.Component {
     //     taskEditing: null,
     //   });
     this.props.onToggleForm();
-    }
+  };
 
   // onCloseForm = () => {
   //   // this.setState({
@@ -105,7 +105,7 @@ class App extends React.Component {
   //   }
   //   localStorage.setItem("tasks", JSON.stringify(tasks));
   // };
-  
+
   //Chuc nang xoa
   // onDelete = (id) => {
   //   var tasks = this.state.tasks;
@@ -200,15 +200,15 @@ class App extends React.Component {
     //   }
     // }
     var isDisplayForm = this.props.isDisplayForm;
-    var elmTaskForm = isDisplayForm ? (
-      <TaskForm
-        // onCloseForm={this.onCloseForm}
-        // onSubmit={this.onSubmit}
-        task={this.state.taskEditing}
-      />
-    ) : (
-      ""
-    );
+    // var elmTaskForm = isDisplayForm ? (
+    //   <TaskForm
+    //     // onCloseForm={this.onCloseForm}
+    //     // onSubmit={this.onSubmit}
+    //     task={this.state.taskEditing}
+    //   />
+    // ) : (
+    //   ""
+    // );
     return (
       <div className="container">
         <div className="text-center">
@@ -222,7 +222,11 @@ class App extends React.Component {
             }
           >
             {/* TaskForm - 4cot */}
-            {elmTaskForm}
+            <TaskForm
+              // onCloseForm={this.onCloseForm}
+              // onSubmit={this.onSubmit}
+              task={this.state.taskEditing}
+            />
           </div>
           <div
             className={
@@ -258,7 +262,7 @@ class App extends React.Component {
               // }
               // onUpdateStatus={this.onUpdateStatus}
               // onDelete={this.onDelete}
-              onUpdate={this.onUpdate}
+              // onUpdate={this.onUpdate}
               onFilter={this.onFilter}
             />
           </div>
@@ -270,16 +274,13 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isDisplayForm: state.isDisplayForm,
-
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onToggleForm: () => {
       dispatch(actions.toggleForm());
-      
     },
-    
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

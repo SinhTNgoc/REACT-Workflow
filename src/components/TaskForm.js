@@ -89,6 +89,9 @@ class TaskForm extends React.Component {
     return null;
   }
   render() {
+    if (this.props.isDisplayForm === false) {
+      return "";
+    }else {
     return (
       <div className="panel panel-warning">
         <div className="panel-heading text-icon">
@@ -143,8 +146,11 @@ class TaskForm extends React.Component {
     );
   }
 }
+}
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    isDisplayForm: state.isDisplayForm,
+  };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
@@ -153,8 +159,7 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onCloseForm: () => {
       dispatch(actions.closeForm());
-
-    }
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

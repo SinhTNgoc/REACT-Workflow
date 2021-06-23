@@ -7,11 +7,13 @@ class TaskItem extends React.Component {
     this.props.onUpdateStatusTask(this.props.task.id);
   };
   onDeleteTask = () => {
-    this.props.onDeleteTask(this.props.task.id);
-    this.props.closeForm();
+    this.props.onDeleteTask(this.props.task);
+    this.props.onCloseForm();
   };
-  onUpdate = () => {
-    this.props.onUpdate(this.props.task.id);
+  onEditTask = () => {
+    this.props.onOpenForm();
+    // this.props.onUpdate(this.props.task.id);
+    this.props.onEditTask(this.props.task);
   };
   render() {
     return (
@@ -34,7 +36,7 @@ class TaskItem extends React.Component {
           <button
             type="button"
             className="btn btn-warning"
-            onClick={this.onUpdate}
+            onClick={this.onEditTask}
           >
             <i className="fas fa-pencil-alt mr-5"></i>Sua
           </button>
@@ -64,8 +66,15 @@ const mapDispatchToProps = (dispatch, props) => {
     onDeleteTask: (id) => {
       dispatch(actions.onDeleteTask(id));
     },
-    closeForm: () => {
+    onCloseForm: () => {
       dispatch(actions.closeForm());
+    },
+    onOpenForm: () => {
+      dispatch(actions.openForm());
+
+    },
+    onEditTask: (task) => {
+      dispatch(actions.editTask(task));
     }
   };
 };

@@ -1,5 +1,5 @@
 import * as types from "./../constants/actionTypes";
-var initialState = true;
+var initialState = false;
 var myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.TOGGLE_FORM:
