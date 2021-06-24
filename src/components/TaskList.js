@@ -1,6 +1,7 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskList extends React.Component {
   constructor(props) {
@@ -12,11 +13,17 @@ class TaskList extends React.Component {
   }
   onChange = (e) => {
     var name = e.target.name;
-    var value = e.target.value;
-    this.props.onFilter(
-      name === "filterName" ? value : this.state.filterName,
-      name === "filterStatus" ? value : this.state.filterStatus
-    );
+    var value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    // this.props.onFilter(
+    //   name === "filterName" ? value : this.state.filterName,
+    //   name === "filterStatus" ? value : this.state.filterStatus
+    // );
+    var filter = {
+      name: name === "filterName" ? value : this.state.filterName,
+      status: name === "filterStatus" ? value : this.state.filterStatus,
+    };
+    this.props.onFilterTable(filter);
     this.setState(
       {
         [name]: value,
@@ -27,19 +34,47 @@ class TaskList extends React.Component {
     );
   };
   render() {
-  //  var tasks = this.props.tasks;
-    var elmTasks = this.props.tasks.map((task, index) => {
-      return (
-        <TaskItem
-          key={task.id}
-          index={index}
-          task={task}
-          // onUpdateStatus={this.props.onUpdateStatus}
-          // onDelete={this.props.onDelete}
-          // onUpdate={this.props.onUpdate}
-        />
-      );
+    var filterTable = this.props.filterTable;
+    var tasks = this.props.tasks;
+    //filter table
+    var filterTasks = [];
+    if (filterTable.name) {
+      filterTasks = tasks.filter((task) => {
+        return (
+          task.name.toLowerCase().indexOf(filterTable.name.toLowerCase()) !== -1
+        );
+      });
+    }
+    filterTasks = filterTasks.filter((task) => {
+      if (filterTable.status === -1) {
+        return task;
+      } else if (filterTable.status === 1) {
+        return task.status === true;
+      } else return task.status === false;
     });
+
+    var elmTasks = [];
+    if (filterTable.name) {
+      elmTasks = filterTasks.map((task, index) => {
+        return (
+          <TaskItem
+            key={task.id}
+            index={index}
+            task={task}
+          />
+        );
+      });
+    } else {
+      elmTasks = this.props.tasks.map((task, index) => {
+        return (
+          <TaskItem
+            key={task.id}
+            index={index}
+            task={task}
+          />
+        );
+      });
+    }
     return (
       <div className="row mt-15">
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -87,7 +122,15 @@ class TaskList extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    tasks: state.tasks
-  }
+    tasks: state.tasks,
+    filterTable: state.filterTable,
+  };
 };
-export default connect(mapStateToProps,null)(TaskList);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onFilterTable: (filter) => {
+      dispatch(actions.filterTask(filter));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
