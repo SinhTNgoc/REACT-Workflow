@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       // tasks: [], //id, name, status
       // isDisplayForm: false,
-      taskEditing: null,
+      // taskEditing: null,
       filter: {
         name: "",
         status: -1,
@@ -50,17 +50,17 @@ class App extends React.Component {
   // }
 
   onToggleForm = () => {
-    // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-    //   this.setState({
-    //     isDisplayForm: true,
-    //     taskEditing: null,
-    //   });
-    // } else {
-    //   this.setState({
-    //     isDisplayForm: !this.state.isDisplayForm,
-    //     taskEditing: null,
-    //   });
-    this.props.onToggleForm();
+    if (this.props.editTask && this.props.editTask.id !== "") {
+      this.props.onOpenForm();
+    } else {
+      this.props.onToggleForm();
+    }
+
+    this.props.onClearTask({
+      id: "",
+      name: "",
+      status: false,
+    });
   };
 
   // onCloseForm = () => {
@@ -223,9 +223,9 @@ class App extends React.Component {
           >
             {/* TaskForm - 4cot */}
             <TaskForm
-              // onCloseForm={this.onCloseForm}
-              // onSubmit={this.onSubmit}
-              task={this.state.taskEditing}
+            // onCloseForm={this.onCloseForm}
+            // onSubmit={this.onSubmit}
+            // task={this.state.taskEditing}
             />
           </div>
           <div
@@ -274,12 +274,19 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isDisplayForm: state.isDisplayForm,
+    editTask: state.editTask,
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onToggleForm: () => {
       dispatch(actions.toggleForm());
+    },
+    onClearTask: (task) => {
+      dispatch(actions.editTask(task));
+    },
+    onOpenForm: () => {
+      dispatch(actions.openForm());
     },
   };
 };

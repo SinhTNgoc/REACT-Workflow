@@ -5,10 +5,10 @@ export const listAll = () => {
     type: types.LIST_ALL,
   };
 };
-export const addTask = (task) => {
+export const saveTask = (task) => {
   return {
-    type: types.ADD_TASK,
-    task: task, //task.name,task.status
+    type: types.SAVE_TASK,
+    task: task,
   };
 };
 export const toggleForm = () => {
@@ -39,6 +39,6 @@ export const onDeleteTask = (id) => {
 export const editTask = (task) => {
   return {
     type: types.EDIT_TASK,
-    task: task
+    task: task,
   };
 };

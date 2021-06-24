@@ -27,7 +27,7 @@ class TaskForm extends React.Component {
     e.preventDefault();
     // this.props.onSubmit(this.state);
     //Close form && Clear
-    this.props.onAddTasks(this.state);
+    this.props.onSaveTask(this.state);
     this.onClearForm();
     this.onCloseForm();
   };
@@ -41,121 +41,123 @@ class TaskForm extends React.Component {
     });
   };
   componentDidMount() {
-    if (this.props.task) {
+    // console.log(this.props.editTask);
+    if (this.props.editTask) {
       this.setState({
-        id: this.props.task.id,
-        name: this.props.task.name,
-        status: this.props.task.status,
+        id: this.props.editTask.id,
+        name: this.props.editTask.name,
+        status: this.props.editTask.status,
       });
     }
     // console.log("123");
   }
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   if (nextProps && nextProps.task) {
-  //     this.setState({
-  //       id: nextProps.task.id,
-  //       name: nextProps.task.name,
-  //       status: nextProps.task.status,
-  //     });
-  //   } else if (!nextProps.task) {
-  //     this.setState({
-  //       id: "",
-  //       name: "",
-  //       status: false,
-  //     });
-  //   }
-  // console.log(nextProps);
-  // }
-  static getDerivedStateFromProps(props, state) {
-    // console.log("props", props);
-    // console.log("state", state);
-    if (props.task) {
-      if (props.task.id !== state.id) {
-        return {
-          id: props.task.id,
-          name: props.task.name,
-          status: props.task.status,
-        };
-      }
-    } else {
-      if (state.id) {
-        return {
-          id: "",
-          name: "",
-          status: true,
-        };
-      }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.editTask) {
+      this.setState({
+        id: nextProps.editTask.id,
+        name: nextProps.editTask.name,
+        status: nextProps.editTask.status,
+      });
+    } else if (!nextProps.editTask) {
+      this.setState({
+        id: "",
+        name: "",
+        status: false,
+      });
     }
-    return null;
+  // console.log(nextProps);
   }
+  // static getDerivedStateFromProps(props, state) {
+  //   // console.log("props", props);
+  //   // console.log("state", state);
+  //   if (props.editTask) {
+  //     if (props.editTask.id !== state.id) {
+  //       return {
+  //         id: props.editTask.id,
+  //         name: props.editTask.name,
+  //         status: props.editTask.status,
+  //       };
+  //     }
+  //   } else {
+  //     if (state.id) {
+  //       return {
+  //         id: "",
+  //         name: "",
+  //         status: true,
+  //       };
+  //     }
+  //   }
+  //   return null;
+  // }
   render() {
     if (this.props.isDisplayForm === false) {
       return "";
-    }else {
-    return (
-      <div className="panel panel-warning">
-        <div className="panel-heading text-icon">
-          <h3 className="panel-title">
-            {this.state.id ? "Cap nhat cong viec" : "Them cong viec"}
-          </h3>
-          <i
-            className="fas fa-times-circle text-right "
-            onClick={this.onCloseForm}
-          ></i>
-        </div>
-        <div className="panel-body">
-          <form action="" onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>Ten :</label>
-              <input
-                type="text"
+    } else {
+      return (
+        <div className="panel panel-warning">
+          <div className="panel-heading text-icon">
+            <h3 className="panel-title">
+              {this.state.id ? "Cap nhat cong viec" : "Them cong viec"}
+            </h3>
+            <i
+              className="fas fa-times-circle text-right "
+              onClick={this.onCloseForm}
+            ></i>
+          </div>
+          <div className="panel-body">
+            <form action="" onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label>Ten :</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                />
+              </div>
+              <label>Trang thai :</label>
+              <select
                 className="form-control"
-                name="name"
-                value={this.state.name}
+                required="required"
+                name="status"
+                value={this.state.status}
                 onChange={this.onChange}
-              />
-            </div>
-            <label>Trang thai :</label>
-            <select
-              className="form-control"
-              required="required"
-              name="status"
-              value={this.state.status}
-              onChange={this.onChange}
-            >
-              <option value={true}>Kich hoat</option>
-              <option value={false}>An</option>
-            </select>
-            <br />
-            <div className="text-center">
-              <button type="submit" className="btn btn-warning">
-                Them
-              </button>
-              &nbsp;
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={this.onClearForm}
               >
-                Huy bo
-              </button>
-            </div>
-          </form>
+                <option value={true}>Kich hoat</option>
+                <option value={false}>An</option>
+              </select>
+              <br />
+              <div className="text-center">
+                <button type="submit" className="btn btn-warning">
+                  Them
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={this.onClearForm}
+                >
+                  Huy bo
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
 }
 const mapStateToProps = (state) => {
   return {
     isDisplayForm: state.isDisplayForm,
+    editTask: state.editTask,
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onAddTasks: (task) => {
-      dispatch(actions.addTask(task));
+    onSaveTask: (task) => {
+      dispatch(actions.saveTask(task));
     },
     onCloseForm: () => {
       dispatch(actions.closeForm());
