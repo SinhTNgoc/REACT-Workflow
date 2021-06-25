@@ -160,31 +160,10 @@ class App extends React.Component {
     //Chuc nang loc du lieu
     // var filter = this.state.filter;
     // var tasks = this.state.tasks;
-    // // Chuc nang tim kiem
-    // var keyWord = this.state.keyWord;
-    // if (keyWord) {
-    //   tasks = tasks.filter((task) => {
-    //     return task.name.toLowerCase().indexOf(keyWord) !== -1;
-    //   });
-    // }
+   
     // //Chuc nang sort
     // var sort = this.state.sort;
-    // if (sort) {
-    //   if (sort.By === "name") {
-    //     tasks = tasks.sort((a, b) => {
-    //       if (a.name > b.name) return sort.value;
-    //       else if (a.name < b.name)
-    //         return -sort.value;
-    //       else return 0;
-    //     });
-    //   } else {
-    //     tasks = tasks.sort((a, b) => {
-    //       if (a.status > b.status) return -sort.value;
-    //       else if (a.status < b.status) return sort.value;
-    //       else return 0;
-    //     });
-    //   }
-    // }
+    // 
     var isDisplayForm = this.props.isDisplayForm;
     // var elmTaskForm = isDisplayForm ? (
     //   <TaskForm
@@ -235,7 +214,7 @@ class App extends React.Component {
             >
               Generate Data
             </button>
-            <Control onSearch={this.onSearch} onSort={this.onSort} />
+            <Control />
             <TaskList
               // tasks={
               //   filter.name

@@ -48,3 +48,15 @@ export const filterTask = (filter) => {
     filter: filter,//filterName,filterStatus
   }
 }
+export const searchTask = (keyword) =>{
+  return {
+    type: types.SEARCH,
+    keyword: keyword
+  }
+}
+export const sortTask = (sort) => {
+  return {
+    type: types.SORT,
+    sort: sort // sort.by, sort.value
+  }
+}

@@ -15,10 +15,6 @@ class TaskList extends React.Component {
     var name = e.target.name;
     var value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    // this.props.onFilter(
-    //   name === "filterName" ? value : this.state.filterName,
-    //   name === "filterStatus" ? value : this.state.filterStatus
-    // );
     var filter = {
       name: name === "filterName" ? value : this.state.filterName,
       status: name === "filterStatus" ? value : this.state.filterStatus,
@@ -34,10 +30,13 @@ class TaskList extends React.Component {
     );
   };
   render() {
-    var filterTable = this.props.filterTable;
     var tasks = this.props.tasks;
+    var filterTable = this.props.filterTable;
+    var keyword = this.props.keyword;
+    var sort = this.props.sort;
     //filter table
     var filterTasks = [];
+    var elmTasks = [];
     if (filterTable.name) {
       filterTasks = tasks.filter((task) => {
         return (
@@ -52,29 +51,47 @@ class TaskList extends React.Component {
         return task.status === true;
       } else return task.status === false;
     });
-
-    var elmTasks = [];
     if (filterTable.name) {
       elmTasks = filterTasks.map((task, index) => {
-        return (
-          <TaskItem
-            key={task.id}
-            index={index}
-            task={task}
-          />
-        );
+        return <TaskItem key={task.id} index={index} task={task} />;
       });
     } else {
       elmTasks = this.props.tasks.map((task, index) => {
-        return (
-          <TaskItem
-            key={task.id}
-            index={index}
-            task={task}
-          />
-        );
+        return <TaskItem key={task.id} index={index} task={task} />;
       });
     }
+
+    // // Chuc nang tim kiem
+    if (keyword) {
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyword) !== -1;
+      });
+      elmTasks = tasks.map((task, index) => {
+        return <TaskItem key={task.id} index={index} task={task} />;
+      });
+    }
+
+    //Chuc nang sort
+    if (sort.by) {
+      if (sort.by === "name") {
+        tasks = tasks.sort((a, b) => {
+          if (a.name > b.name) return sort.value;
+          else if (a.name < b.name) return -sort.value;
+          else return 0;
+        });
+      } else {
+        tasks = tasks.sort((a, b) => {
+          if (a.status > b.status) return -sort.value;
+          else if (a.status < b.status) return sort.value;
+          else return 0;
+        });
+      }
+
+      elmTasks = tasks.map((task, index) => {
+        return <TaskItem key={task.id} index={index} task={task} />;
+      });
+    }
+
     return (
       <div className="row mt-15">
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -124,6 +141,8 @@ const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     filterTable: state.filterTable,
+    keyword: state.search,
+    sort: state.sort,
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
